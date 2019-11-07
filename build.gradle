@@ -1,0 +1,50 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id 'war' //TODO How to running jar http://www.masterspringboot.com/cloud/docker/running-a-spring-boot-application-with-docker
+}
+
+group 'kolpakovaGrouopId'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repository.primefaces.org"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.27'
+    compile group: 'org.glassfish', name: 'javax.faces', version: '2.2.13'
+    providedCompile group: 'javax.enterprise', name: 'cdi-api', version: '2.0.SP1'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+test {
+    useJUnitPlatform()
+}
